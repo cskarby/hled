@@ -1,0 +1,4 @@
+This software is intended as a highlight editor,
+it is based on http://doc.trolltech.com/4.6/richtext-syntaxhighlighter.html
+
+Requirements: QT 4.6
