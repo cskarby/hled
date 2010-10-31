@@ -13,6 +13,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+    setWindowIcon(QIcon(":/qrc/hled.png"));
     MaxRecentFiles = 5;
     editor = new QTextEdit;
     highlighter = new Highlighter(editor->document());
