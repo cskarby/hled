@@ -8,8 +8,9 @@
 
 #include <QtGui>
 
-#include "mainwindow.h"
 #include "about.h"
+#include "mainwindow.h"
+#include "urlshower.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -183,7 +184,8 @@ void MainWindow::setupHelpMenu()
 {
     QMenu *helpMenu = new QMenu(tr("&Help"), this);
     menuBar()->addMenu(helpMenu);
-
+    UrlShower * projectWiki = new UrlShower(QUrl("https://dev.interhost.no/hled/"));
+    helpMenu->addAction(tr("Project &website"), projectWiki, SLOT(show()));
     QString title("About ");
     QWidget *about = new About(title + qApp->applicationName(), ":/qrc/README");
     helpMenu->addAction(tr("&About"), about, SLOT(show()));

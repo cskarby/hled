@@ -10,6 +10,6 @@ About::About(const QString &title, const QString &fileName, QWidget *parent) :
     if (file.open(QFile::ReadOnly | QFile::Text)) {
         ui.textBrowser->setPlainText(file.readAll());
     }
-    ui.label->setText(qApp->applicationName() + " " + qApp->applicationVersion());
+    ui.label->setText(qApp->applicationName() + " " + qApp->applicationVersion() + " created by Interhost AS - www.interhost.no.");
     connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(hide()));
 }
