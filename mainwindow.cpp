@@ -42,7 +42,10 @@ void MainWindow::openFile(const QString &path)
     if (!fileName.isEmpty()) {
         QFile file(fileName);
         if (file.open(QFile::ReadOnly | QFile::Text)) {
-            editor->setPlainText(file.readAll());
+            QByteArray buf(file.readAll());
+            // avoid truncated view ending on first occurance of NULL
+            buf.replace('\0', '\r');
+            editor->setPlainText(buf);
             QString title(qApp->applicationName());
             title.append(": ");
             title.append(strippedName(fileName));
