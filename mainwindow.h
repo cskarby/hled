@@ -8,6 +8,7 @@
 
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#define MAINWINDOW_SRC "$HeadURL$"
 
 #include <QMainWindow>
 
@@ -47,6 +48,7 @@ private:
     void setupSearchWordsWidget();
     void setupFileMenu();
     void setupViewMenu();
+    void setupHelpMenu();
     void readSettings();
     void writeSettings();
     void updateRecentFiles(const QString & filePath = "");

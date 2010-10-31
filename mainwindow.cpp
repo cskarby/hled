@@ -8,7 +8,9 @@
 
 #include <QtGui>
 
+#include "about.h"
 #include "mainwindow.h"
+#include "urlshower.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -20,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     setupFileMenu();
     setupSearchWordsWidget();
     setupViewMenu();
+    setupHelpMenu();
     setCentralWidget(editor);
     addDockWidget(Qt::RightDockWidgetArea, searchWordsWidget);
     newFile();
@@ -175,6 +178,24 @@ void MainWindow::setupFileMenu()
     editMenu->addAction(tr("&Find"), this, SLOT(find()), QKeySequence::Find);
     editMenu->addAction(tr("Find &next"), this, SLOT(findNext()), QKeySequence::FindNext);
     editMenu->addAction(tr("Find &previous"), this, SLOT(findPrev()), QKeySequence::FindPrevious);
+}
+
+void MainWindow::setupHelpMenu()
+{
+    QMenu *helpMenu = new QMenu(tr("&Help"), this);
+    menuBar()->addMenu(helpMenu);
+    QWidget *help = new About("Help", ":/qrc/HELP");
+    helpMenu->addAction(tr("&Help"), help, SLOT(show()), QKeySequence::HelpContents);
+    UrlShower * projectWiki = new UrlShower(QUrl("https://dev.interhost.no/hled/"));
+    helpMenu->addAction(tr("Project &website"), projectWiki, SLOT(show()));
+    UrlShower * qregexp = new UrlShower(QUrl("http://doc.qt.nokia.com/latest/qregexp.html"));
+    helpMenu->addAction(tr("Regular expressions (technical web site)"), qregexp, SLOT(show()));
+    QString title("About ");
+    QWidget *about = new About(title + qApp->applicationName(), ":/qrc/README");
+    helpMenu->addAction(tr("&About"), about, SLOT(show()));
+    title = "License for ";
+    QWidget *license = new About(title + qApp->applicationName(), ":/qrc/LICENSE");
+    helpMenu->addAction(tr("&License"), license, SLOT(show()));
 }
 
 void MainWindow::find()

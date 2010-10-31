@@ -1,4 +1,20 @@
-This software is intended as a highlight editor,
-it is based on http://doc.trolltech.com/4.6/richtext-syntaxhighlighter.html
+HLED is a HighLight EDitor created after an idea by Karen Sofie
+Christophersen while doing some medical research.  The project is targeting
+scientits and others who need to read through text and highlight certain
+words and phrases.  To ease reading of RTF files Microsoft Rich Text
+formatting is displayed in gray.
+
+Our project home page is on https://dev.interhost.no/hled/ which is hosted
+by Interhost AS, Norway.  This software were initially based on an example
+from QT by Nokia, see 
+http://doc.qt.nokia.com/4.6/richtext-syntaxhighlighter.html Code
+contributions and patches are welcome, please send an email to mail at
+interhost.no.
+
+Contributors (alphabetically):
+Knut Eirik Eliassen, Flåttbårne sykdommer i norsk allmennpraksis:
+  Funding build for windows
+Christian Skarby, www.interhost.no:
+  Programming and project hosting
 
 Requirements: QT 4.6

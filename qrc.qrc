@@ -1,6 +1,8 @@
 <RCC>
-  <qresource prefix="qrc">
-    <file>hled.png</file>
-    <file>LICENSE</file>
-  </qresource>
+    <qresource prefix="/qrc">
+        <file>hled.png</file>
+        <file>LICENSE</file>
+        <file>README</file>
+        <file>HELP</file>
+    </qresource>
 </RCC>

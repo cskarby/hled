@@ -1,0 +1,18 @@
+Fileformat: The editor reads plain text files and RTF-files. Other files
+might also possibly open ;) Use the file menu, press open file, and choose
+the desired file to open it in the viewer.
+
+The editor hightlights certain search terms as defined by the user. If the
+window showing the search terms are not visible, choose Search Terms from
+the View menu.
+
+Search terms are saved as a user setting when you quit the editor. If
+running several instances be sure to keep the instance with the terms you
+would like too keep for a new session until the other program instances are
+closed. The search terms will then be overwritten with the desired search
+terms when you quit your last program instance.
+
+Usually you can express search terms directly, however more complex terms
+can be defined as the search terms are interpreted as regular expressions.
+See the introduction section on http://doc.qt.nokia.com/latest/qregexp.html for
+more info.
