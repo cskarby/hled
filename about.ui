@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>530</width>
-    <height>360</height>
+    <height>391</height>
    </rect>
   </property>
   <property name="acceptDrops">
@@ -17,7 +17,7 @@
    <string>About HLED</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="qrc.qrc">
     <normaloff>:/qrc/hled.png</normaloff>:/qrc/hled.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -65,6 +65,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="qrc.qrc"/>
+ </resources>
  <connections/>
 </ui>

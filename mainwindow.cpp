@@ -184,8 +184,12 @@ void MainWindow::setupHelpMenu()
 {
     QMenu *helpMenu = new QMenu(tr("&Help"), this);
     menuBar()->addMenu(helpMenu);
+    QWidget *help = new About("Help", ":/qrc/HELP");
+    helpMenu->addAction(tr("&Help"), help, SLOT(show()), QKeySequence::HelpContents);
     UrlShower * projectWiki = new UrlShower(QUrl("https://dev.interhost.no/hled/"));
     helpMenu->addAction(tr("Project &website"), projectWiki, SLOT(show()));
+    UrlShower * qregexp = new UrlShower(QUrl("http://doc.qt.nokia.com/latest/qregexp.html"));
+    helpMenu->addAction(tr("Regular expressions (technical web site)"), qregexp, SLOT(show()));
     QString title("About ");
     QWidget *about = new About(title + qApp->applicationName(), ":/qrc/README");
     helpMenu->addAction(tr("&About"), about, SLOT(show()));

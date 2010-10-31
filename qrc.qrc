@@ -3,5 +3,6 @@
         <file>hled.png</file>
         <file>LICENSE</file>
         <file>README</file>
+        <file>HELP</file>
     </qresource>
 </RCC>

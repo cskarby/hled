@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'about.ui'
 **
-** Created: Sun Oct 31 14:56:53 2010
+** Created: Sun Oct 31 16:47:28 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -40,7 +40,7 @@ public:
     {
         if (Form->objectName().isEmpty())
             Form->setObjectName(QString::fromUtf8("Form"));
-        Form->resize(530, 360);
+        Form->resize(530, 391);
         Form->setAcceptDrops(false);
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/qrc/hled.png"), QSize(), QIcon::Normal, QIcon::Off);
