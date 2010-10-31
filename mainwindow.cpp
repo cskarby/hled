@@ -9,6 +9,7 @@
 #include <QtGui>
 
 #include "mainwindow.h"
+#include "about.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -20,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     setupFileMenu();
     setupSearchWordsWidget();
     setupViewMenu();
+    setupHelpMenu();
     setCentralWidget(editor);
     addDockWidget(Qt::RightDockWidgetArea, searchWordsWidget);
     newFile();
@@ -175,6 +177,19 @@ void MainWindow::setupFileMenu()
     editMenu->addAction(tr("&Find"), this, SLOT(find()), QKeySequence::Find);
     editMenu->addAction(tr("Find &next"), this, SLOT(findNext()), QKeySequence::FindNext);
     editMenu->addAction(tr("Find &previous"), this, SLOT(findPrev()), QKeySequence::FindPrevious);
+}
+
+void MainWindow::setupHelpMenu()
+{
+    QMenu *helpMenu = new QMenu(tr("&Help"), this);
+    menuBar()->addMenu(helpMenu);
+
+    QString title("About ");
+    QWidget *about = new About(title + qApp->applicationName(), ":/qrc/README");
+    helpMenu->addAction(tr("&About"), about, SLOT(show()));
+    title = "License for ";
+    QWidget *license = new About(title + qApp->applicationName(), ":/qrc/LICENSE");
+    helpMenu->addAction(tr("&License"), license, SLOT(show()));
 }
 
 void MainWindow::find()

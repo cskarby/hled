@@ -7,6 +7,9 @@
 ****************************************************************************/
 
 #include <QApplication>
+#include <QString>
+#include <QFileInfo>
+#include <QDir>
 
 #include "mainwindow.h"
 
@@ -16,6 +19,11 @@ int main(int argc, char *argv[])
     app.setOrganizationName("Interhost AS");
     app.setOrganizationDomain("interhost.no");
     app.setApplicationName("HLED");
+    QString mainwindow_src(MAINWINDOW_SRC);
+    mainwindow_src.remove(QRegExp("HeadURL:?"));
+    mainwindow_src.remove("$");
+    QFileInfo path(mainwindow_src);
+    app.setApplicationVersion(path.dir().dirName());
     MainWindow window;
     window.show();
     return app.exec();
