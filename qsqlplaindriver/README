@@ -1,0 +1,7 @@
+
+The QSqlPlainTextDriver is an QSQL-Driver for CSV files. As of now it
+makes use of the Qt 4.x C++ Toolkit and its QSqlDriver interface.
+
+Further information is available at:
+	http://home.gna.org/qsqlplaindriver/
+
