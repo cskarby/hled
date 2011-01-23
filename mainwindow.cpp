@@ -26,16 +26,16 @@ MainWindow::MainWindow(QWidget *parent)
     setupHelpMenu();
     setCentralWidget(editor);
     addDockWidget(Qt::RightDockWidgetArea, searchWordsWidget);
-    addDockWidget(Qt::TopDockWidgetArea, databaseWidget);
     newFile();
     updateRecentFiles();
     readSettings();
+    databaseWidget->hide();
 }
 
 void MainWindow::newFile()
 {
     editor->clear();
-    databaseWidget->setModel(0);
+    databaseWidget->hide();
     setWindowTitle(qApp->applicationName());
 }
 
@@ -152,6 +152,7 @@ void MainWindow::setupDatabaseWidget()
 {
     databaseWidget = new DatabaseTableView();
     databaseWidget->setObjectName("databaseWidget"); // for saveState()
+    addDockWidget(Qt::TopDockWidgetArea, databaseWidget);
 }
 
 void MainWindow::addSearchTermDialog()

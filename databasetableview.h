@@ -2,7 +2,9 @@
 #define DATABASETABLEVIEW_H
 
 #include <QDockWidget>
+#include <QFile>
 #include <QSqlTableModel>
+#include <QProcess>
 
 namespace Ui {
     class DatabaseTableView;
@@ -16,14 +18,19 @@ public:
     explicit DatabaseTableView(QWidget *parent = 0);
     ~DatabaseTableView();
 
-    void setModel ( QSqlTableModel * /* model */ );
+    void readFile ( QFile & /* file */);
 
 private:
     Ui::DatabaseTableView *ui;
     QSqlTableModel * model;
+    QProcess * schema;
+    QProcess * data;
+    QString dbmFileName;
 
 private slots:
     void setFilter(const QString & filter);
+    void setSchema ();
+    void setData ();
 };
 
 #endif // DATABASETABLEVIEW_H
