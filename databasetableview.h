@@ -28,9 +28,9 @@ private:
     QString dbmFileName;
 
 private slots:
-    void setFilter(const QString & filter);
-    void setSchema ();
-    void setData ();
+    void setFilter();
+    void setSchema();
+    void setData();
 };
 
 #endif // DATABASETABLEVIEW_H

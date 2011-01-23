@@ -26,7 +26,7 @@ DatabaseTableView::DatabaseTableView(QWidget *parent) :
     ui->tableView->setTabKeyNavigation(false);
     ui->tableView->setSortingEnabled(true);
     ui->tableView->setModel(model);
-    connect(ui->lineEdit, SIGNAL(textChanged(QString)), this, SLOT(setFilter(QString)));
+    connect(ui->lineEdit, SIGNAL(editingFinished()), this, SLOT(setFilter()));
 }
 
 DatabaseTableView::~DatabaseTableView()
@@ -81,7 +81,7 @@ void DatabaseTableView::setData()
     data = 0;
 }
 
-void DatabaseTableView::setFilter (const QString &filter)
+void DatabaseTableView::setFilter ()
 {
-    model->setFilter(filter);
+    model->setFilter(ui->lineEdit->text());
 }
