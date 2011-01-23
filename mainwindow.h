@@ -12,6 +12,7 @@
 
 #include <QMainWindow>
 
+#include "databasetableview.h"
 #include "highlighter.h"
 
 QT_BEGIN_NAMESPACE
@@ -61,7 +62,7 @@ private:
     Highlighter *highlighter;
     QStringListModel * matchWords;
     QDockWidget * searchWordsWidget;
-    QDockWidget * databaseWidget;
+    DatabaseTableView * databaseWidget;
     QColorDialog * matchedColor;
     QListView * listView;
     QAction * separatorAct;

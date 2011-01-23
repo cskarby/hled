@@ -9,7 +9,6 @@
 #include <QtGui>
 
 #include "about.h"
-#include "databasetableview.h"
 #include "mainwindow.h"
 #include "urlshower.h"
 
@@ -36,7 +35,21 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::newFile()
 {
     editor->clear();
+    databaseWidget->setModel(0);
     setWindowTitle(qApp->applicationName());
+}
+
+void readDatabase(QFile & file, DatabaseTableView * view)
+{
+    QFileInfo notes(file.fileName());
+    if (notes.baseName().startsWith("JNotat_") && notes.suffix() == "txt") {
+        QString dbName = QString("%1.mdb").arg(notes.baseName());
+        dbName.replace(0,6,"FL");
+        QFile mdbFile(notes.absolutePath() + "/" + dbName);
+        if (mdbFile.exists()) {
+            view->readFile(mdbFile);
+        }
+    }
 }
 
 void MainWindow::openFile(const QString &path)
@@ -49,6 +62,7 @@ void MainWindow::openFile(const QString &path)
     if (!fileName.isEmpty()) {
         QFile file(fileName);
         if (file.open(QFile::ReadOnly | QFile::Text)) {
+            readDatabase(file, databaseWidget);
             QByteArray buf(file.readAll());
             // avoid truncated view ending on first occurance of NULL
             buf.replace('\0', '\r');
