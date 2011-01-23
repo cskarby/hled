@@ -9,6 +9,7 @@
 #include <QtGui>
 
 #include "about.h"
+#include "databasetableview.h"
 #include "mainwindow.h"
 #include "urlshower.h"
 
@@ -21,10 +22,12 @@ MainWindow::MainWindow(QWidget *parent)
     highlighter = new Highlighter(editor->document());
     setupFileMenu();
     setupSearchWordsWidget();
+    setupDatabaseWidget();
     setupViewMenu();
     setupHelpMenu();
     setCentralWidget(editor);
     addDockWidget(Qt::RightDockWidgetArea, searchWordsWidget);
+    addDockWidget(Qt::TopDockWidgetArea, databaseWidget);
     newFile();
     updateRecentFiles();
     readSettings();
@@ -131,6 +134,12 @@ void MainWindow::setupSearchWordsWidget()
     connect(removeButton, SIGNAL(clicked()), this, SLOT(removeSearchTerm()));
 }
 
+void MainWindow::setupDatabaseWidget()
+{
+    databaseWidget = new DatabaseTableView();
+    databaseWidget->setObjectName("databaseWidget"); // for saveState()
+}
+
 void MainWindow::addSearchTermDialog()
 {
     bool ok;
@@ -234,6 +243,7 @@ void MainWindow::setupViewMenu()
     menuBar()->addMenu(viewMenu);
     viewMenu->addAction(tr("&Font"), this, SLOT(chooseFont()));
     viewMenu->addAction(tr("&Search terms"), searchWordsWidget, SLOT(show()));
+    viewMenu->addAction(tr("&Database"), databaseWidget, SLOT(show()));
 }
 
 void MainWindow::chooseFont()

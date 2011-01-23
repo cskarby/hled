@@ -46,6 +46,7 @@ protected:
 
 private:
     void setupSearchWordsWidget();
+    void setupDatabaseWidget();
     void setupFileMenu();
     void setupViewMenu();
     void setupHelpMenu();
@@ -60,6 +61,7 @@ private:
     Highlighter *highlighter;
     QStringListModel * matchWords;
     QDockWidget * searchWordsWidget;
+    QDockWidget * databaseWidget;
     QColorDialog * matchedColor;
     QListView * listView;
     QAction * separatorAct;

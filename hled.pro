@@ -2,12 +2,13 @@ HEADERS = highlighter.h \
     mainwindow.h \
     about.h \
     urlshower.h \
-    rowtableview.h
+    databasetableview.h
 SOURCES = highlighter.cpp \
     mainwindow.cpp \
     main.cpp \
     about.cpp \
     urlshower.cpp \
-    rowtableview.cpp
+    databasetableview.cpp
 RESOURCES += qrc.qrc
-FORMS += about.ui
+FORMS += about.ui \
+    databasetableview.ui
