@@ -7,7 +7,7 @@ class RowTableView : public QTableView
 {
     Q_OBJECT
 public:
-    explicit RowTableView(QObject *parent = 0);
+    explicit RowTableView(QWidget *parent = 0);
 
 signals:
 

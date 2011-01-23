@@ -178,6 +178,9 @@ void MainWindow::setupFileMenu()
     editMenu->addAction(tr("&Find"), this, SLOT(find()), QKeySequence::Find);
     editMenu->addAction(tr("Find &next"), this, SLOT(findNext()), QKeySequence::FindNext);
     editMenu->addAction(tr("Find &previous"), this, SLOT(findPrev()), QKeySequence::FindPrevious);
+    editMenu->addSeparator();
+    editMenu->addAction(tr("N&ext note"), this, SLOT(findNext()), QKeySequence::NextChild);
+    editMenu->addAction(tr("P&revious note"), this, SLOT(findPrev()), QKeySequence::PreviousChild);
 }
 
 void MainWindow::setupHelpMenu()

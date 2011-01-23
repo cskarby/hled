@@ -1,6 +1,6 @@
 #include "rowtableview.h"
 
-RowTableView::RowTableView(QObject *parent) :
+RowTableView::RowTableView(QWidget *parent) :
     QTableView(parent)
 {
     this->setSelectionBehavior(QAbstractItemView::SelectRows);
