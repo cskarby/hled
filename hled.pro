@@ -12,3 +12,4 @@ SOURCES = highlighter.cpp \
 RESOURCES += qrc.qrc
 FORMS += about.ui \
     databasetableview.ui
+QT += sql
