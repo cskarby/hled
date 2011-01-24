@@ -140,15 +140,17 @@ void DatabaseTableView::prev()
 
 void DatabaseTableView::selectionChanged(const QItemSelection &selected)
 {
-    QModelIndex row(selected.indexes().at(0));
-    QSqlQuery query;
-    query.prepare(QString("SELECT data FROM %1 WHERE key1=:key1 AND key2=:key2 AND key3=:key3").arg(NOTE_TABLE));
-    query.bindValue(":key1", model->data(row.sibling(row.row(), 0)).toString());
-    query.bindValue(":key2", model->data(row.sibling(row.row(), 1)).toString());
-    query.bindValue(":key3", model->data(row.sibling(row.row(), 5)).toString());
-    query.exec();
-    emit plainText(model->data(row.sibling(row.row(), 5)).toString());
-    if (query.next()) {
-        emit plainText(query.value(0).toString());
+    QModelIndexList list = selected.indexes();
+    if (list.size() > 0) {
+        QModelIndex row = list.at(0);
+        QSqlQuery query;
+        query.prepare(QString("SELECT data FROM %1 WHERE key1=:key1 AND key2=:key2 AND key3=:key3").arg(NOTE_TABLE));
+        query.bindValue(":key1", model->data(row.sibling(row.row(), 0)).toString());
+        query.bindValue(":key2", model->data(row.sibling(row.row(), 1)).toString());
+        query.bindValue(":key3", model->data(row.sibling(row.row(), 5)).toString());
+        query.exec();
+        if (query.next()) {
+            emit plainText(query.value(0).toString());
+        }
     }
 }
