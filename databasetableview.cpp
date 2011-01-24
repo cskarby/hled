@@ -1,5 +1,6 @@
 #include "databasetableview.h"
 #include "ui_databasetableview.h"
+#include <QBuffer>
 #include <QRegExp>
 #include <QSqlQuery>
 #include <QTextStream>
@@ -50,16 +51,30 @@ void DatabaseTableView::readFile(QFile & file, QByteArray buf)
     query.exec(QString("DROP TABLE IF EXISTS %1").arg(NOTE_TABLE));
     query.exec("CREATE TABLE %1 (key1 Char(14), key2 Int8, key3 Timestamp, data Text)");
     query.prepare("INSERT INTO %1 (key1, key2, key3, data) VALUES (:key1, :key2, :key3, :data)");
-    buf.replace("-------------------------------------------------------\n-------------------------------------------------------\n", '\0');
+    QByteArray alarm("\a");
+    buf.replace(alarm, QByteArray("\r"));
+    buf.replace("-------------------------------------------------------\n-------------------------------------------------------\n", alarm);
     QByteArray note;
-/*
-    foreach(note, buf.split('\0')) {
-        query.bindValue(":key1", );
-        query.bindValue(":key2", );
-        query.bindValue(":key3", );
+    QBuffer tmp;
+    QRegExp re1(":\\s+(\\d+)");
+    QRegExp re2(":\\s+(\\d+\\.\\d+\\.\\d+)");
+    int pos(0);
+    QString line;
+    foreach(note, buf.split('\a')) {
+        tmp.close();
+        tmp.setData(note);
+        tmp.open(QBuffer::ReadOnly);
+        line = QString::fromUtf8(tmp.readLine());
+        if (re1.indexIn(line, 0) != -1)
+            query.bindValue(":key1", re1.cap(1));
+        if (re2.indexIn(line, 0) != -1)
+            query.bindValue(":key3", re1.cap(1));
+        line = QString::fromUtf8(tmp.readLine());
+        if (re1.indexIn(line, 0) != -1)
+            query.bindValue(":key2", re1.cap(1));
         query.bindValue(":data", note);
+        query.exec();
     }
-*/
 }
 
 void DatabaseTableView::setSchema()
