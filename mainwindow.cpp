@@ -150,9 +150,10 @@ void MainWindow::setupSearchWordsWidget()
 
 void MainWindow::setupDatabaseWidget()
 {
-    databaseWidget = new DatabaseTableView();
+    databaseWidget = new DatabaseTableView(this);
     databaseWidget->setObjectName("databaseWidget"); // for saveState()
     addDockWidget(Qt::TopDockWidgetArea, databaseWidget);
+    connect(databaseWidget, SIGNAL(plainText(QString)), this, SLOT(setPlainText(QString)));
 }
 
 void MainWindow::addSearchTermDialog()
@@ -320,4 +321,9 @@ void MainWindow::writeSettings()
     settings.setValue("color", matchedColor->currentColor());
     settings.setValue("searchTerms", QVariant(matchWords->stringList()));
     settings.endGroup();
+}
+
+void MainWindow::setPlainText(const QString &text)
+{
+    editor->setPlainText(text);
 }

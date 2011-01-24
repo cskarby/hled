@@ -3,6 +3,7 @@
 
 #include <QDockWidget>
 #include <QFile>
+#include <QItemSelection>
 #include <QSqlTableModel>
 #include <QProcess>
 
@@ -24,6 +25,9 @@ public slots:
     void next();
     void prev();
 
+signals:
+    void plainText(const QString & text);
+
 private:
     Ui::DatabaseTableView *ui;
     QSqlTableModel * model;
@@ -35,6 +39,7 @@ private slots:
     void setFilter();
     void setSchema();
     void setData();
+    void selectionChanged ( const QItemSelection & selected);
 };
 
 #endif // DATABASETABLEVIEW_H

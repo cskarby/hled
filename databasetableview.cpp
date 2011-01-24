@@ -31,6 +31,7 @@ DatabaseTableView::DatabaseTableView(QWidget *parent) :
     ui->tableView->setSortingEnabled(true);
     ui->tableView->setModel(model);
     connect(ui->lineEdit, SIGNAL(editingFinished()), this, SLOT(setFilter()));
+    connect(ui->tableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(selectionChanged(QItemSelection)));
 }
 
 DatabaseTableView::~DatabaseTableView()
@@ -49,8 +50,8 @@ void DatabaseTableView::readFile(QFile & file, QByteArray buf)
     schema->start("/usr/bin/mdb-schema", QStringList() << this->dbmFileName << "postgres");
 
     query.exec(QString("DROP TABLE IF EXISTS %1").arg(NOTE_TABLE));
-    query.exec("CREATE TABLE %1 (key1 Char(14), key2 Int8, key3 Timestamp, data Text)");
-    query.prepare("INSERT INTO %1 (key1, key2, key3, data) VALUES (:key1, :key2, :key3, :data)");
+    query.exec(QString("CREATE TABLE %1 (key1 Char(14), key2 Int8, key3 Timestamp, data Text)").arg(NOTE_TABLE));
+    query.prepare(QString("INSERT INTO %1 (key1, key2, key3, data) VALUES (:key1, :key2, :key3, :data)").arg(NOTE_TABLE));
     QByteArray alarm("\a");
     buf.replace(alarm, QByteArray("\r"));
     buf.replace("-------------------------------------------------------\n-------------------------------------------------------\n", alarm);
@@ -58,7 +59,6 @@ void DatabaseTableView::readFile(QFile & file, QByteArray buf)
     QBuffer tmp;
     QRegExp re1(":\\s+(\\d+)");
     QRegExp re2(":\\s+(\\d+\\.\\d+\\.\\d+)");
-    int pos(0);
     QString line;
     foreach(note, buf.split('\a')) {
         tmp.close();
@@ -68,7 +68,7 @@ void DatabaseTableView::readFile(QFile & file, QByteArray buf)
         if (re1.indexIn(line, 0) != -1)
             query.bindValue(":key1", re1.cap(1));
         if (re2.indexIn(line, 0) != -1)
-            query.bindValue(":key3", re1.cap(1));
+            query.bindValue(":key3", re2.cap(1));
         line = QString::fromUtf8(tmp.readLine());
         if (re1.indexIn(line, 0) != -1)
             query.bindValue(":key2", re1.cap(1));
@@ -135,5 +135,20 @@ void DatabaseTableView::prev()
         ui->tableView->selectRow(ui->tableView->model()->rowCount() - 1);
     } else {
         ui->tableView->selectRow(list.at(0).row() - 1);
+    }
+}
+
+void DatabaseTableView::selectionChanged(const QItemSelection &selected)
+{
+    QModelIndex row(selected.indexes().at(0));
+    QSqlQuery query;
+    query.prepare(QString("SELECT data FROM %1 WHERE key1=:key1 AND key2=:key2 AND key3=:key3").arg(NOTE_TABLE));
+    query.bindValue(":key1", model->data(row.sibling(row.row(), 0)).toString());
+    query.bindValue(":key2", model->data(row.sibling(row.row(), 1)).toString());
+    query.bindValue(":key3", model->data(row.sibling(row.row(), 5)).toString());
+    query.exec();
+    emit plainText(model->data(row.sibling(row.row(), 5)).toString());
+    if (query.next()) {
+        emit plainText(query.value(0).toString());
     }
 }

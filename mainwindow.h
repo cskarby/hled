@@ -41,6 +41,7 @@ public slots:
     void find();
     void findNext();
     void findPrev();
+    void setPlainText ( const QString & text );
 
 protected:
     void closeEvent(QCloseEvent *event);
