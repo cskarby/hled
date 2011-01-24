@@ -18,7 +18,7 @@ public:
     explicit DatabaseTableView(QWidget *parent = 0);
     ~DatabaseTableView();
 
-    void readFile ( QFile & /* file */);
+    void readFile(QFile & /* file */, QByteArray buf);
 
 public slots:
     void next();

@@ -1,9 +1,11 @@
 #include "databasetableview.h"
 #include "ui_databasetableview.h"
+#include <QRegExp>
 #include <QSqlQuery>
 #include <QTextStream>
 
 #define TABLE_NAME "Flaatt"
+#define NOTE_TABLE "NOTAT"
 
 DatabaseTableView::DatabaseTableView(QWidget *parent) :
     QDockWidget(parent),
@@ -35,7 +37,7 @@ DatabaseTableView::~DatabaseTableView()
     delete ui;
 }
 
-void DatabaseTableView::readFile(QFile & file)
+void DatabaseTableView::readFile(QFile & file, QByteArray buf)
 {
     this->hide();
     this->dbmFileName = file.fileName();
@@ -44,6 +46,20 @@ void DatabaseTableView::readFile(QFile & file)
     schema = new QProcess(this);
     connect(schema, SIGNAL(finished(int)), this, SLOT(setSchema()));
     schema->start("/usr/bin/mdb-schema", QStringList() << this->dbmFileName << "postgres");
+
+    query.exec(QString("DROP TABLE IF EXISTS %1").arg(NOTE_TABLE));
+    query.exec("CREATE TABLE %1 (key1 Char(14), key2 Int8, key3 Timestamp, data Text)");
+    query.prepare("INSERT INTO %1 (key1, key2, key3, data) VALUES (:key1, :key2, :key3, :data)");
+    buf.replace("-------------------------------------------------------\n-------------------------------------------------------\n", '\0');
+    QByteArray note;
+/*
+    foreach(note, buf.split('\0')) {
+        query.bindValue(":key1", );
+        query.bindValue(":key2", );
+        query.bindValue(":key3", );
+        query.bindValue(":data", note);
+    }
+*/
 }
 
 void DatabaseTableView::setSchema()
@@ -61,7 +77,7 @@ void DatabaseTableView::setSchema()
     schema = 0;
     data = new QProcess(this);
     connect(data, SIGNAL(finished(int)), this, SLOT(setData()));
-    data->start("/usr/bin/mdb-export", QStringList() << "-I" << this->dbmFileName << TABLE_NAME);
+    data->start("/usr/bin/mdb-export", QStringList() << "-D" << "%d.%m.%Y" << "-I" << this->dbmFileName << TABLE_NAME);
 }
 
 void DatabaseTableView::setData()

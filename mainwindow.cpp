@@ -39,7 +39,7 @@ void MainWindow::newFile()
     setWindowTitle(qApp->applicationName());
 }
 
-void readDatabase(QFile & file, DatabaseTableView * view)
+void readDatabase(QFile & file, QByteArray buf, DatabaseTableView * view)
 {
     QFileInfo notes(file.fileName());
     if (notes.baseName().startsWith("JNotat_") && notes.suffix() == "txt") {
@@ -47,7 +47,7 @@ void readDatabase(QFile & file, DatabaseTableView * view)
         dbName.replace(0,6,"FL");
         QFile mdbFile(notes.absolutePath() + "/" + dbName);
         if (mdbFile.exists()) {
-            view->readFile(mdbFile);
+            view->readFile(mdbFile, buf);
         }
     }
 }
@@ -62,10 +62,10 @@ void MainWindow::openFile(const QString &path)
     if (!fileName.isEmpty()) {
         QFile file(fileName);
         if (file.open(QFile::ReadOnly | QFile::Text)) {
-            readDatabase(file, databaseWidget);
             QByteArray buf(file.readAll());
             // avoid truncated view ending on first occurance of NULL
             buf.replace('\0', '\r');
+            readDatabase(file, buf, databaseWidget);
             editor->setPlainText(buf);
             QString title(qApp->applicationName());
             title.append(": ");
