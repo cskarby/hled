@@ -19,9 +19,9 @@ MainWindow::MainWindow(QWidget *parent)
     MaxRecentFiles = 5;
     editor = new QTextEdit;
     highlighter = new Highlighter(editor->document());
+    setupDatabaseWidget();
     setupFileMenu();
     setupSearchWordsWidget();
-    setupDatabaseWidget();
     setupViewMenu();
     setupHelpMenu();
     setCentralWidget(editor);
@@ -203,8 +203,8 @@ void MainWindow::setupFileMenu()
     editMenu->addAction(tr("Find &next"), this, SLOT(findNext()), QKeySequence::FindNext);
     editMenu->addAction(tr("Find &previous"), this, SLOT(findPrev()), QKeySequence::FindPrevious);
     editMenu->addSeparator();
-    editMenu->addAction(tr("N&ext note"), this, SLOT(findNext()), QKeySequence::NextChild);
-    editMenu->addAction(tr("P&revious note"), this, SLOT(findPrev()), QKeySequence::PreviousChild);
+    editMenu->addAction(tr("N&ext note"), databaseWidget, SLOT(next()), QKeySequence::NextChild);
+    editMenu->addAction(tr("P&revious note"), databaseWidget, SLOT(prev()), QKeySequence::PreviousChild);
 }
 
 void MainWindow::setupHelpMenu()

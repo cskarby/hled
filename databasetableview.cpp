@@ -22,6 +22,7 @@ DatabaseTableView::DatabaseTableView(QWidget *parent) :
 
     ui->setupUi(this);
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableView->setTabKeyNavigation(false);
     ui->tableView->setSortingEnabled(true);
@@ -84,4 +85,24 @@ void DatabaseTableView::setData()
 void DatabaseTableView::setFilter ()
 {
     model->setFilter(ui->lineEdit->text());
+}
+
+void DatabaseTableView::next()
+{
+    QModelIndexList list(ui->tableView->selectionModel()->selectedIndexes());
+    if (list.empty()) {
+        ui->tableView->selectRow(0);
+    } else {
+        ui->tableView->selectRow(list.at(0).row() + 1);
+    }
+}
+
+void DatabaseTableView::prev()
+{
+    QModelIndexList list(ui->tableView->selectionModel()->selectedIndexes());
+    if (list.empty()) {
+        ui->tableView->selectRow(ui->tableView->model()->rowCount() - 1);
+    } else {
+        ui->tableView->selectRow(list.at(0).row() - 1);
+    }
 }

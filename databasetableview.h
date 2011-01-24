@@ -20,6 +20,10 @@ public:
 
     void readFile ( QFile & /* file */);
 
+public slots:
+    void next();
+    void prev();
+
 private:
     Ui::DatabaseTableView *ui;
     QSqlTableModel * model;
