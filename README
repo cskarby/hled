@@ -7,9 +7,9 @@ formatting is displayed in gray.
 Our project home page is on https://dev.interhost.no/projects/hled/wiki which is hosted
 by Interhost AS, Norway.  This software were initially based on an example
 from QT by Nokia, see 
-http://doc.qt.nokia.com/4.6/richtext-syntaxhighlighter.html Code
-contributions and patches are welcome, please send an email to mail at
-interhost.no.
+https://doc.qt.io/archives/4.6/richtext-syntaxhighlighter.html Code
+contributions and patches are welcome, please send use github for issues and
+pull requests.
 
 Contributors (alphabetically):
 Knut Eirik Eliassen, Flåttbårne sykdommer i norsk allmennpraksis:
